@@ -1,0 +1,6 @@
+scikit-learn
+torch>=1.4.0
+sacred>=0.8.0
+tqdm
+git+git://github.com/luizgh/visdom_logger
+faiss-gpu
