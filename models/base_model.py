@@ -34,6 +34,7 @@ class BaseModel(nn.Module):
         self.remap = nn.Identity()
         if remap or num_features != self.backbone_features:
             self.remap = nn.Linear(self.backbone_features, num_features)
+            nn.init.zeros_(self.remap.bias)
 
         self.dropout = nn.Dropout(p=dropout)
         self.classifier = nn.Linear(num_features, num_classes)
