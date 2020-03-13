@@ -46,10 +46,10 @@ python experiment.py with dataset.cars model.resnet50 epochs=100 lr=0.05 model.n
 
 Stanford Online Products
 ```bash
-python experiment.py with dataset.sop model.resnet50 epochs=100 lr=0.01 momentum=0.9 nesterov=True model.norm_layer=batch
+python experiment.py with dataset.sop model.resnet50 epochs=100 lr=0.003 momentum=0.99 nesterov=True model.norm_layer=batch
 ```
 
 In-Shop
 ```bash
-python experiment.py with dataset.inshop model.resnet50 epochs=100 lr=0.01 momentum=0.9 nesterov=True model.norm_layer=batch
+python experiment.py with dataset.inshop model.resnet50 epochs=100 lr=0.003 momentum=0.99 nesterov=True model.norm_layer=batch
 ```
