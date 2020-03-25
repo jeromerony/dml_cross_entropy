@@ -24,10 +24,9 @@ def state_dict_to_cpu(state_dict: OrderedDict):
 
 
 class SmoothCrossEntropy(nn.Module):
-    def __init__(self, epsilon: float = 0., temperature: float = 1.):
+    def __init__(self, epsilon: float = 0.):
         super(SmoothCrossEntropy, self).__init__()
         self.epsilon = float(epsilon)
-        self.temperature = float(temperature)
 
     def forward(self, logits: torch.Tensor, labels: torch.LongTensor) -> torch.Tensor:
         target_probs = torch.full_like(logits, self.epsilon / (logits.shape[1] - 1))

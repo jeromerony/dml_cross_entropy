@@ -41,7 +41,6 @@ def config():
 
     no_bias_decay = True
     label_smoothing = 0.1
-    temperature = 1.
 
 
 @ex.capture
@@ -67,8 +66,7 @@ def get_optimizer_scheduler(parameters, loader_length, epochs, lr, momentum, nes
 
 
 @ex.automain
-def main(epochs, cpu, cudnn_flag, visdom_port, visdom_freq, temp_dir, seed, no_bias_decay, label_smoothing,
-         temperature):
+def main(epochs, cpu, cudnn_flag, visdom_port, visdom_freq, temp_dir, seed, no_bias_decay, label_smoothing):
     device = torch.device('cuda:0' if torch.cuda.is_available() and not cpu else 'cpu')
     callback = VisdomLogger(port=visdom_port) if visdom_port else None
     if cudnn_flag == 'deterministic':
@@ -79,7 +77,7 @@ def main(epochs, cpu, cudnn_flag, visdom_port, visdom_freq, temp_dir, seed, no_b
 
     torch.manual_seed(seed)
     model = get_model(num_classes=loaders.num_classes)
-    class_loss = SmoothCrossEntropy(epsilon=label_smoothing, temperature=temperature)
+    class_loss = SmoothCrossEntropy(epsilon=label_smoothing)
 
     model.to(device)
     if torch.cuda.device_count() > 1:
