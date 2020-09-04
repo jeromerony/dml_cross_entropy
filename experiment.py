@@ -1,5 +1,6 @@
 import math
 import os
+import tempfile
 from copy import deepcopy
 from functools import partial
 from pprint import pprint
@@ -37,7 +38,7 @@ def config():
     visdom_freq = 20
     cpu = False  # Force training on CPU
     cudnn_flag = 'benchmark'
-    temp_dir = os.path.join('results', 'temp')
+    temp_dir = tempfile.gettempdir()
 
     no_bias_decay = True
     label_smoothing = 0.1
