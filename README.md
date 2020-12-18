@@ -53,3 +53,15 @@ In-Shop
 ```bash
 python experiment.py with dataset.inshop model.resnet50 epochs=100 lr=0.003 momentum=0.99 nesterov=True model.norm_layer=batch
 ```
+
+## Citation
+```bibtex
+@inproceedings{boudiaf2020unifying,
+  title={A unifying mutual information view of metric learning: cross-entropy vs. pairwise losses},
+  author={Boudiaf, Malik and Rony, J{\'e}r{\^o}me and Ziko, Imtiaz Masud and Granger, Eric and Pedersoli, Marco and Piantanida, Pablo and {Ben Ayed}, Ismail},
+  booktitle={European Conference on Computer Vision},
+  pages={548--564},
+  year={2020},
+  organization={Springer}
+}
+```
