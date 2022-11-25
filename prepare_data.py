@@ -7,6 +7,25 @@ from sacred import Experiment
 from scipy.io import loadmat
 from torchvision.datasets.utils import download_url
 
+
+def is_within_directory(directory, target):
+    abs_directory = os.path.abspath(directory)
+    abs_target = os.path.abspath(target)
+
+    prefix = os.path.commonprefix([abs_directory, abs_target])
+
+    return prefix == abs_directory
+
+
+def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+    for member in tar.getmembers():
+        member_path = os.path.join(path, member.name)
+        if not is_within_directory(path, member_path):
+            raise Exception("Attempted Path Traversal in Tar File")
+
+    tar.extractall(path, members, numeric_owner=numeric_owner) 
+
+
 ex1 = Experiment('Prepare CUB')
 
 
@@ -24,25 +43,6 @@ def download_extract_cub(cub_dir, cub_url):
     download_url(cub_url, root=path.dirname(cub_dir))
     filename = path.join(path.dirname(cub_dir), path.basename(cub_url))
     with tarfile.open(filename, 'r:gz') as tar:
-        def is_within_directory(directory, target):
-            
-            abs_directory = os.path.abspath(directory)
-            abs_target = os.path.abspath(target)
-        
-            prefix = os.path.commonprefix([abs_directory, abs_target])
-            
-            return prefix == abs_directory
-        
-        def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
-        
-            for member in tar.getmembers():
-                member_path = os.path.join(path, member.name)
-                if not is_within_directory(path, member_path):
-                    raise Exception("Attempted Path Traversal in Tar File")
-        
-            tar.extractall(path, members, numeric_owner=numeric_owner) 
-            
-        
         safe_extract(tar, path=path.dirname(cub_dir))
 
 
@@ -96,25 +96,6 @@ def download_extract_cars(cars_dir, cars_url, cars_annotations_url):
     download_url(cars_url, root=cars_dir)
     filename = path.join(cars_dir, path.basename(cars_url))
     with tarfile.open(filename, 'r:gz') as tar:
-        def is_within_directory(directory, target):
-            
-            abs_directory = os.path.abspath(directory)
-            abs_target = os.path.abspath(target)
-        
-            prefix = os.path.commonprefix([abs_directory, abs_target])
-            
-            return prefix == abs_directory
-        
-        def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
-        
-            for member in tar.getmembers():
-                member_path = os.path.join(path, member.name)
-                if not is_within_directory(path, member_path):
-                    raise Exception("Attempted Path Traversal in Tar File")
-        
-            tar.extractall(path, members, numeric_owner=numeric_owner) 
-            
-        
         safe_extract(tar, path=cars_dir)
     return path.join(cars_dir, path.basename(cars_annotations_url))
 
